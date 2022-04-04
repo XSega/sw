@@ -1,11 +1,11 @@
 var myButton = document.querySelector('button');
 
 myButton.onclick = function() {
-    createGist({
-      description: 'Fetch API Post example',
-      public: true
-    })
-    
+    // createGist({
+    //   description: 'Fetch API Post example',
+    //   public: true
+    // })
+    fetchGithub();
 }
 
 registerSW();
@@ -19,7 +19,14 @@ function registerSW() {
     });
 }
 
-
+function fetchGithub() {
+    console.log('Posting request to GitHub API...');
+    fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits').then(function(response) {
+        return response.json();
+    }).then(function(data) {
+        sendMessage("Created Gist:" + data.html_url);
+    });
+}
 
 function createGist(opts) {
   console.log('Posting request to GitHub API...');
